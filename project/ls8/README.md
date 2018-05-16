@@ -168,14 +168,14 @@ node ls8 mult.ls8
 (The programs `print8.ls8` and `mult.ls8` are provided in the source directory
 for your convenience.)
 
-For processing the command line, the `process.argv` array holds the individual
-words from the command line. For example, if the user runs `node ls8 mult.js`,
-then the values in the array will be:
+For processing the command line, the `process.argv` array holds the
+individual words from the command line. For example, if the user runs
+`node ls8 mult.ls8`, then the values in the array will be:
 
 ```
 process.argv[0] === "node"
 process.argv[1] === "ls8"
-process.argv[2] === "mult.js"
+process.argv[2] === "mult.ls8"
 ```
 
 so you can look in `process.argv[2]` for the name of the file to load.
