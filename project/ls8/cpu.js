@@ -123,7 +123,8 @@ class CPU {
 		// instruction byte tells you how many bytes follow the instruction byte
 		// for any particular instruction.
 
-		// !!! IMPLEMENT ME
+    // !!! IMPLEMENT ME
+    /*this.PC +1 (0b11000000)*/
 	}
 }
 
