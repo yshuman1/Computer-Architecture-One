@@ -81,11 +81,9 @@ class CPU {
 			case 'CMP':
 				if (this.reg[regA] == this.reg[regB]) {
 					/*0b00000001*/
-				}
-				else if (this.reg[regA] > this.reg[regB]) {
+				} else if (this.reg[regA] > this.reg[regB]) {
 					/*0b00000010*/
-				}
-				else (this.reg[regA] < this.reg[regB]) {
+				} else if (this.reg[regA] < this.reg[regB]) {
 					/*0b0000100*/
 				}
 				break;
