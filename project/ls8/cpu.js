@@ -54,7 +54,25 @@ class CPU {
   alu(op, regA, regB) {
     switch (op) {
       case "MUL":
-        // !!! IMPLEMENT ME
+        this.reg[regA] = this.reg[regA] * this.reg[regB];
+        break;
+      case "ADD":
+        this.reg[regA] = this.reg[regA] + this.reg[regB];
+        break;
+      case "SUB":
+        this.reg[regA] = this.reg[regA] - this.reg[regB];
+        break;
+      case "DIV":
+        this.reg[regA] = this.reg[regA] / this.reg[regB];
+        break;
+      case "INC": //is it this.reg[regA]++
+        //idk
+        break;
+      case "DEC": //is it this.reg[regA]--
+        //idk
+        break;
+      case "CMP":
+        //idk
         break;
     }
   }
