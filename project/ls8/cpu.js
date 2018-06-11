@@ -41,6 +41,9 @@ class CPU {
     clearInterval(this.clock);
   }
 
+  HLT() {
+    this.stopClock();
+  }
   /**
    * ALU functionality
    *
@@ -74,6 +77,9 @@ class CPU {
       case "CMP":
         //idk
         break;
+      default:
+        console.log("halting");
+        this.HLT();
     }
   }
 
