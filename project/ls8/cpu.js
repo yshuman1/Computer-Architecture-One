@@ -123,7 +123,7 @@ class CPU {
       case LDI:
         // Set the value in a register
         this.reg[operandA] = operandB;
-        // this.PC += 3; // Next instruction
+        // this.PC += 3;
         break;
 
       case PRN:
