@@ -107,7 +107,7 @@ class CPU {
     // !!! IMPLEMENT ME
 
     // Debugging output
-    console.log(`${this.PC}: ${IR.toString(2)}`);
+    // console.log(`${this.PC}: ${IR.toString(2)}`);
 
     // Get the two bytes in memory _after_ the PC in case the instruction
     // needs them.
@@ -130,12 +130,12 @@ class CPU {
         break;
 
       case HLT:
-        this.stopClock();
+        this.HLT();
         break;
 
       default:
         console.log("Unknown instruction: " + IR.toString(2));
-        this.stopClock();
+        this.HLT();
         return;
     }
     // Increment the PC register to go to the next instruction. Instructions
