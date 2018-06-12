@@ -103,7 +103,7 @@ class CPU {
     // from the memory address pointed to by the PC. (I.e. the PC holds the
     // index into memory of the instruction that's about to be executed
     // right now.)
-    let IR = this.ram.read(this.pc);
+    let IR = this.ram.read(this.PC);
     // !!! IMPLEMENT ME
 
     // Debugging output
