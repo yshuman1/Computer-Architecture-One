@@ -123,18 +123,18 @@ class CPU {
       case LDI:
         // Set the value in a register
         this.reg[operandA] = operandB;
-        this.PC += 3; // Next instruction
+        // this.PC += 3; // Next instruction
         break;
 
       case PRN:
         console.log(this.reg[operandA]);
-        this.PC += 2;
+        // this.PC += 2;
 
         break;
 
       case HLT:
         this.HLT();
-        this.PC += 1;
+        // this.PC += 1;
         break;
 
       default:
@@ -148,7 +148,8 @@ class CPU {
     // for any particular instruction.
 
     // !!! IMPLEMENT ME
-    /*this.PC +1 (0b11000000)*/
+    const instLen = (IR >> 6) + 1;
+    this.PC += instLen;
   }
 }
 
