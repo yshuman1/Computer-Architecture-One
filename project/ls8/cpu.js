@@ -123,14 +123,18 @@ class CPU {
       case LDI:
         // Set the value in a register
         this.reg[operandA] = operandB;
+        this.PC += 3; // Next instruction
         break;
 
       case PRN:
         console.log(this.reg[operandA]);
+        this.PC += 2;
+
         break;
 
       case HLT:
         this.HLT();
+        this.PC += 1;
         break;
 
       default:
