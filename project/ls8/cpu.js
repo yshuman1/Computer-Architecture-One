@@ -128,6 +128,7 @@ class CPU {
         break;
       case MUL:
         this.alu("MUL", operandA, operandB);
+        break;
       default:
         console.log("Unknown instruction: " + IR.toString(2));
         this.HLT();
