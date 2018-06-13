@@ -4,6 +4,7 @@
 const LDI = 0b10011001;
 const PRN = 0b01000011;
 const HLT = 0b00000001;
+const MUL = 0b10101010;
 // const MUL = 0b10101010;
 /**
  * Class for simulating a simple Computer (CPU & memory)
@@ -81,15 +82,15 @@ class CPU {
       case "DEC":
         this.reg[regA]--;
         break;
-      case "CMP":
-        if (this.reg[regA] == this.reg[regB]) {
-          /*0b00000001*/
-        } else if (this.reg[regA] > this.reg[regB]) {
-          /*0b00000010*/
-        } else if (this.reg[regA] < this.reg[regB]) {
-          /*0b0000100*/
-        }
-        break;
+      // case "CMP":
+      //   if (this.reg[regA] == this.reg[regB]) {
+      //     /*0b00000001*/
+      //   } else if (this.reg[regA] > this.reg[regB]) {
+      //     /*0b00000010*/
+      //   } else if (this.reg[regA] < this.reg[regB]) {
+      //     /*0b0000100*/
+      //   }
+      //   break;
       default:
         console.log("halting");
         this.HLT();
@@ -105,21 +106,16 @@ class CPU {
     // index into memory of the instruction that's about to be executed
     // right now.)
     let IR = this.ram.read(this.PC);
-    // !!! IMPLEMENT ME
 
     // Debugging output
-    // console.log(`${this.PC}: ${IR.toString(2)}`);
+    console.log(`${this.PC}: ${IR.toString(2)}`);
 
     // Get the two bytes in memory _after_ the PC in case the instruction
     // needs them.
-
-    // !!! IMPLEMENT ME
     let operandA = this.ram.read(this.pc + 1);
     let operandB = this.ram.read(this.pc + 2);
     // Execute the instruction. Perform the actions for the instruction as
     // outlined in the LS-8 spec.
-
-    // !!! IMPLEMENT ME
     switch (IR) {
       case LDI:
         this.reg[operandA] = operandB;
@@ -138,10 +134,7 @@ class CPU {
         return;
     }
     // Increment the PC register to go to the next instruction. Instructions
-    // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
-    // instruction byte tells you how many bytes follow the instruction byte
-    // for any particular instruction.
-
+    // can be 1, 2, or 3 bytes long.
     // !!! IMPLEMENT ME.
     // shifts to the right 6 bytes
     const operandCount = (IR >> 6) + 1;
