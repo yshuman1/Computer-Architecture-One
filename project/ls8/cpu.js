@@ -96,6 +96,7 @@ class CPU {
         this.HLT();
     }
   }
+  //hi moe
 
   /**
    * Advances the CPU one cycle
@@ -108,7 +109,7 @@ class CPU {
     let IR = this.ram.read(this.PC);
 
     // Debugging output
-    console.log(`${this.PC}: ${IR.toString(2)}`);
+    // console.log(`${this.PC}: ${IR.toString(2)}`);
 
     // Get the two bytes in memory _after_ the PC in case the instruction
     // needs them.
