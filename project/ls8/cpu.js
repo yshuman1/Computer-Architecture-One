@@ -74,6 +74,7 @@ class CPU {
 
     let operandA = this.ram.read(this.PC + 1);
     let operandB = this.ram.read(this.PC + 2);
+    // let handler = branchTable[IR];
 
     switch (IR) {
       case LDI:
@@ -93,7 +94,23 @@ class CPU {
         this.HLT();
         return;
     }
-
+    // function handle_LDI() {
+    //   this.reg[operandA] = operandB;
+    // }
+    // function handle_PRN() {
+    //   console.log(this.reg[operandA]);
+    // }
+    // function handle_HLT() {
+    //   this.HLT();
+    // }
+    // function handle_MUL() {
+    //   this.alu("MUL", operandA, operandB);
+    // }
+    // branchTable[LDI] = handle_LDI;
+    // branchTable[PRN] = handle_PRN;
+    // branchTable[HLT] = handle_HLT;
+    // branchTable[MUL] = handle_MUL;
+    // handler();
     const operandCount = (IR >> 6) + 1;
     this.PC += operandCount;
   }
