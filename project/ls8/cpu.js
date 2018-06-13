@@ -122,24 +122,14 @@ class CPU {
     // !!! IMPLEMENT ME
     switch (IR) {
       case LDI:
-        // Set the value in a register
         this.reg[operandA] = operandB;
-        // this.PC += 3;
         break;
-
       case PRN:
         console.log(this.reg[operandA]);
-        // this.PC += 2;
-
         break;
-
       case HLT:
         this.HLT();
-        // this.PC += 1;
         break;
-      // case MUL:
-      //   this.reg[regA] = this.reg[regA] * this.reg[regB];
-      //   break;
       default:
         console.log("Unknown instruction: " + IR.toString(2));
         this.HLT();
