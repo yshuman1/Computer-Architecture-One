@@ -130,6 +130,8 @@ class CPU {
       case HLT:
         this.HLT();
         break;
+      case MUL:
+        this.ram.write(operandA, this.alu("MUL", operandA, operandB));
       default:
         console.log("Unknown instruction: " + IR.toString(2));
         this.HLT();
