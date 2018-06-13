@@ -96,7 +96,6 @@ class CPU {
         this.HLT();
     }
   }
-  //hi moe
 
   /**
    * Advances the CPU one cycle
