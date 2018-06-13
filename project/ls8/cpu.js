@@ -71,8 +71,9 @@ class CPU {
 
   tick() {
     let IR = this.ram.read(this.PC);
-    let operandA = this.ram.read(this.pc + 1);
-    let operandB = this.ram.read(this.pc + 2);
+
+    let operandA = this.ram.read(this.PC + 1);
+    let operandB = this.ram.read(this.PC + 2);
 
     switch (IR) {
       case LDI:
