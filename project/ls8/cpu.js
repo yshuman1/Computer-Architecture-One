@@ -150,9 +150,10 @@ class CPU {
     // instruction byte tells you how many bytes follow the instruction byte
     // for any particular instruction.
 
-    // !!! IMPLEMENT ME
-    const instLen = (IR >> 6) + 1;
-    this.PC += instLen;
+    // !!! IMPLEMENT ME.
+    // shifts to the right 6 bytes
+    const operandCount = (IR >> 6) + 1;
+    this.PC += operandCount;
   }
 }
 
