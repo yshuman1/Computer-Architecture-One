@@ -4,49 +4,55 @@
 const LDI = 0b10011001;
 const PRN = 0b01000011;
 const HLT = 0b00000001;
+const MUL = 0b10101010;
+const POP = 0b01001100;
+const PUSH = 0b01001101;
+const SP = 7;
 /**
  * Class for simulating a simple Computer (CPU & memory)
  */
 class CPU {
-  /**
-   * Initialize the CPU
-   */
-  constructor(ram) {
-    this.ram = ram;
+	/**
+	 * Initialize the CPU
+	 */
+	constructor(ram) {
+		this.ram = ram;
 
-    this.reg = new Array(8).fill(0); // General-purpose registers R0-R7
+		this.reg = new Array(8).fill(0); // General-purpose registers R0-R7
 
-    // Special-purpose registers
-    this.PC = 0; // Program Counter
-  }
+		this.reg[SP] = 0xf4;
 
-  /**
-   * Store value in memory address, useful for program loading
-   */
-  poke(address, value) {
-    this.ram.write(address, value);
-  }
+		// Special-purpose registers
+		this.PC = 0; // Program Counter
+	}
 
-  /**
-   * Starts the clock ticking on the CPU
-   */
-  startClock() {
-    this.clock = setInterval(() => {
-      this.tick();
-    }, 1); // 1 ms delay == 1 KHz clock == 0.000001 GHz
-  }
+	/**
+	 * Store value in memory address, useful for program loading
+	 */
+	poke(address, value) {
+		this.ram.write(address, value);
+	}
 
-  /**
-   * Stops the clock
-   */
-  stopClock() {
-    clearInterval(this.clock);
-  }
+	/**
+	 * Starts the clock ticking on the CPU
+	 */
+	startClock() {
+		this.clock = setInterval(() => {
+			this.tick();
+		}, 1); // 1 ms delay == 1 KHz clock == 0.000001 GHz
+	}
 
-  HLT() {
-    this.stopClock();
-  }
-  /**
+	/**
+	 * Stops the clock
+	 */
+	stopClock() {
+		clearInterval(this.clock);
+	}
+
+	HLT() {
+		this.stopClock();
+	}
+	/**
 	 * ALU functionality
 	 *
 	 * The ALU is responsible for math and comparisons.
@@ -56,74 +62,92 @@ class CPU {
 	 *
 	//  * op can be: ADD SUB MUL DIV INC DEC CMP
 	//  */
-  // alu(op, regA, regB) {
-  // 	switch (op) {
-  // 		case 'MUL':
-  // 			this.reg[regA] = this.reg[regA] * this.reg[regB];
-  // 			break;
+	alu(op, regA, regB) {
+		switch (op) {
+			case 'ADD':
+				this.reg[this.operandA] += this.reg[this.operandB];
+				break;
 
-  // 		default:
-  // 			console.log('halting');
-  // 			this.HLT();
-  // 	}
-  // }
+			case 'MUL':
+				this.reg[regA] = (this.reg[regB] * this.reg[regA]) & 0xff;
+				break;
 
-  /**
-   * Advances the CPU one cycle
-   */
-  tick() {
-    // Load the instruction register (IR--can just be a local variable here)
-    // from the memory address pointed to by the PC. (I.e. the PC holds the
-    // index into memory of the instruction that's about to be executed
-    // right now.)
-    const IR = this.ram.read(this.PC); //maybe???
-    // !!! IMPLEMENT ME
+			default:
+				console.log('halting');
+				this.HLT();
+		}
+	}
 
-    // Debugging output
-    // console.log(`${this.PC}: ${IR.toString(2)}`);
+	/**
+	 * Advances the CPU one cycle
+	 */
+	tick() {
+		// Load the instruction register (IR--can just be a local variable here)
+		// from the memory address pointed to by the PC. (I.e. the PC holds the
+		// index into memory of the instruction that's about to be executed
+		// right now.)
+		const IR = this.ram.read(this.PC); //maybe???
+		// !!! IMPLEMENT ME
 
-    // Get the two bytes in memory _after_ the PC in case the instruction
-    // needs them.
+		// Debugging output
+		// console.log(`${this.PC}: ${IR.toString(2)}`);
 
-    // !!! IMPLEMENT ME
-    let operandA = this.ram.read(this.PC + 1);
-    let operandB = this.ram.read(this.PC + 2);
-    // Execute the instruction. Perform the actions for the instruction as
-    // outlined in the LS-8 spec.
+		// Get the two bytes in memory _after_ the PC in case the instruction
+		// needs them.
 
-    // !!! IMPLEMENT ME
-    switch (IR) {
-      case LDI:
-        // set the value in a register
-        this.reg[operandA] = operandB;
-        // this.PC += 3; //next instruction
-        break;
+		// !!! IMPLEMENT ME
+		let operandA = this.ram.read(this.PC + 1);
+		let operandB = this.ram.read(this.PC + 2);
+		// Execute the instruction. Perform the actions for the instruction as
+		// outlined in the LS-8 spec.
 
-      case PRN:
-        console.log(this.reg[operandA]);
-        // this.PC += 2;
-        break;
+		// !!! IMPLEMENT ME
+		switch (IR) {
+			case LDI:
+				// set the value in a register
+				this.reg[operandA] = operandB;
+				// this.PC += 3; //next instruction
+				break;
 
-      case HLT:
-        this.HLT();
-        // this.PC += 1;
-        break;
+			case PRN:
+				console.log(this.reg[operandA]);
+				// this.PC += 2;
+				break;
 
-      default:
-        console.log("Unknown instruction:" + IR.toString(2));
-        this.HLT();
-        return;
-    }
+			case HLT:
+				this.HLT();
+				// this.PC += 1;
+				break;
 
-    // Increment the PC register to go to the next instruction. Instructions
-    // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
-    // instruction byte tells you how many bytes follow the instruction byte
-    // for any particular instruction.
+			case MUL:
+				this.alu('MUL', operandA, operandB);
+				break;
 
-    // !!! IMPLEMENT ME
-    this.PC += ((IR & 0b11000000) >> 6) + 1;
-    // console.log(`new PC: ${this.PC}`);
-  }
+			case PUSH:
+				this.reg[SP]--;
+				this.ram.write(this.reg[SP], this.reg[operandA]);
+				break;
+
+			case POP:
+				this.reg[operandA] = this.ram.read(this.reg[SP]);
+				this.reg[SP]++;
+				break;
+
+			default:
+				console.log('Unknown instruction:' + IR.toString(2));
+				this.HLT();
+				return;
+		}
+
+		// Increment the PC register to go to the next instruction. Instructions
+		// can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
+		// instruction byte tells you how many bytes follow the instruction byte
+		// for any particular instruction.
+
+		// !!! IMPLEMENT ME
+		this.PC += ((IR & 0b11000000) >> 6) + 1;
+		// console.log(`new PC: ${this.PC}`);
+	}
 }
 
 module.exports = CPU;
